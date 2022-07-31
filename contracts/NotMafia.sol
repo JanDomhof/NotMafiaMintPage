@@ -104,8 +104,8 @@ contract NotMafia is ERC721A, Ownable, ReentrancyGuard {
         payable
         nonReentrant
     {
-        if (tx.origin != msg.sender) revert OnlyUserMint();
         if (status != Status.SALE) revert WrongMintFunction();
+        if (tx.origin != msg.sender) revert OnlyUserMint();
         if (msg.value != __amount * PRICE) revert ValueNotEqualToPrice();
         uint256 amountMinted = hasMintedSale[msg.sender];
         if (amountMinted + __amount > MAX_PER_WALLET)
