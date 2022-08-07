@@ -9,7 +9,7 @@ describe("whiteListMint", () => {
   beforeEach(async function () {
     // Deploy mafia
     mafiaFactory = await ethers.getContractFactory("NotMafia");
-    mafia = await mafiaFactory.deploy("MAFIA", "MAF", "");
+    mafia = await mafiaFactory.deploy("MAFIA", "MAF", "", "", "0.01312");
 
     // Get signers and their addresses
     signers = await ethers.getSigners();
@@ -87,7 +87,7 @@ describe("freeMint", () => {
   beforeEach(async function () {
     // Deploy mafia
     mafiaFactory = await ethers.getContractFactory("NotMafia");
-    mafia = await mafiaFactory.deploy("MAFIA", "MAF", "");
+    mafia = await mafiaFactory.deploy("MAFIA", "MAF", "", "", "0.01312");
 
     // Get signers and their addresses
     signers = await ethers.getSigners();
@@ -173,7 +173,7 @@ describe("saleMint", () => {
   beforeEach(async function () {
     // Deploy mafia
     mafiaFactory = await ethers.getContractFactory("NotMafia");
-    mafia = await mafiaFactory.deploy("MAFIA", "MAF", "");
+    mafia = await mafiaFactory.deploy("MAFIA", "MAF", "", "", "0.01312");
 
     // Get signers and their addresses
     signers = await ethers.getSigners();
@@ -309,7 +309,7 @@ describe("ownerMint", async () => {
   beforeEach(async function () {
     // Deploy mafia
     mafiaFactory = await ethers.getContractFactory("NotMafia");
-    mafia = await mafiaFactory.deploy("MAFIA", "MAF", "");
+    mafia = await mafiaFactory.deploy("MAFIA", "MAF", "", "", "0.01312");
 
     // Get signers and their addresses
     signers = await ethers.getSigners();
@@ -340,7 +340,7 @@ describe("withdraw", async () => {
   beforeEach(async function () {
     // Deploy mafia
     mafiaFactory = await ethers.getContractFactory("NotMafia");
-    mafia = await mafiaFactory.deploy("MAFIA", "MAF", "");
+    mafia = await mafiaFactory.deploy("MAFIA", "MAF", "", "", "0.01312");
 
     // Get provider for checking balances
     provider = ethers.provider;

@@ -29,6 +29,8 @@ contract NotMafia is ERC721A, Ownable, ReentrancyGuard {
     Status public status;
     string public baseURI;
     string public provenance;
+    uint256 public price;
+
     uint256 private tokenId;
 
     bytes32 public whiteListRoot;
@@ -37,7 +39,6 @@ contract NotMafia is ERC721A, Ownable, ReentrancyGuard {
     uint256 private constant TOTAL_SUPPLY = 4444;
     uint256 private constant TOTAL_FREE_SUPPLY = 2222;
     uint256 private constant MAX_PER_WALLET = 3;
-    uint256 private constant PRICE = 0.01312 ether;
 
     mapping(address => bool) private hasMintedWhiteList;
     mapping(address => bool) private hasMintedFree;
@@ -48,17 +49,21 @@ contract NotMafia is ERC721A, Ownable, ReentrancyGuard {
     event ChangedBaseURI(string newURI);
     event ChangedMerkleRoot(bytes32 newMerkleRoot);
     event ChangedTeamWalletAddress(address newAddress);
+    event ChangedProvenance(string provenance);
     event WithdrawnAmount(uint256 amount, address to);
 
     // Constructor
     constructor(
         string memory __name,
         string memory __symbol,
-        string memory __baseURI
+        string memory __baseURI,
+        string memory __provenance,
+        uint256 __price
     ) ERC721A(__name, __symbol) {
         baseURI = __baseURI;
         status = Status.CLOSED;
-        provenance = "";
+        provenance = __provenance;
+        price = __price;
     }
 
     // Public
@@ -106,7 +111,7 @@ contract NotMafia is ERC721A, Ownable, ReentrancyGuard {
     {
         if (status != Status.SALE) revert WrongMintFunction();
         if (tx.origin != msg.sender) revert OnlyUserMint();
-        if (msg.value != __amount * PRICE) revert ValueNotEqualToPrice();
+        if (msg.value != __amount * price) revert ValueNotEqualToPrice();
         uint256 amountMinted = hasMintedSale[msg.sender];
         if (amountMinted + __amount > MAX_PER_WALLET)
             revert WouldExceedMaxPerWallet();
@@ -188,6 +193,12 @@ contract NotMafia is ERC721A, Ownable, ReentrancyGuard {
 
     function setProvenanceHash(string memory __hash) external onlyOwner {
         provenance = __hash;
+        emit ChangedProvenance(__hash);
+    }
+
+    function setPrice(uint256 __price) external onlyOwner {
+        price = __price;
+        emit ChangedPrice(__price);
     }
 
     // Withdraw Funds From Contract

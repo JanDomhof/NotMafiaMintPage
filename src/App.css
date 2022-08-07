@@ -1,14 +1,35 @@
 @font-face {
-  font-family: "corleone";
-  src: url(../public/corleone.woff);
+  font-family: "nanum";
+  src: url(../public/NanumBrushScript-Regular.ttf);
 }
 
 @font-face {
-  font-family: "giovonni";
-  src: url(../public/dongiovonni.ttf);
+  font-family: "beth-ellen";
+  src: url(../public/BethEllen-Regular.ttf);
+}
+* {
+  font-family: "beth-ellen";
 }
 
-* {
-  /* font-family: "giovonni"; */
+html {
+  background: url(../public/background-pc.png) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  height: 100%;
+}
+
+body {
   overflow: hidden;
+  height: 100%;
+}
+
+#root {
+  height: 100%;
+}
+
+#mint-button:hover ~ #mint-text {
+  color: #ff0000;
+  text-shadow: 0 0 5px #ff0000, 0 0 10px #ff0000, 0 0 20px #ff0000;
 }
