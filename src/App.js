@@ -49,12 +49,11 @@ function App() {
   }, []);
 
   return (
-    <Text fontSize={50}>THIS IS FOR MOBILE</Text>
-    // <Flex height={"100%"} direction="column" justify={"space-between"}>
-    //   <NavBar accounts={accounts} setAccounts={setAccounts} />
-    //   <Mint accounts={accounts} address={address} status={status} />
-    //   <FootBar address={address} tokenId={tokenId} />
-    // </Flex>
+    <Flex height={"100%"} direction="column" justify={"space-between"}>
+      <NavBar accounts={accounts} setAccounts={setAccounts} />
+      <Mint accounts={accounts} address={address} status={status} />
+      <FootBar address={address} tokenId={tokenId} />
+    </Flex>
   );
 }
 
