@@ -141,10 +141,11 @@ const Mint = ({ accounts, address, status }) => {
         justify={"center"}
         align={"center"}
         height="300px"
+        width={"100%"}
       >
-        <Image src={MintField} height={"300px"} position="absolute"></Image>
+        <Image src={MintField} maxWidth={"500px"} position="absolute"></Image>
         {!isConnected ? (
-          <Text fontSize={30} zIndex={10}>
+          <Text fontSize={30} zIndex={10} textAlign="center">
             Please connect your wallet.
           </Text>
         ) : (

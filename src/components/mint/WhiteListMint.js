@@ -57,7 +57,7 @@ const WhiteListMint = ({ accounts, address }) => {
 
   return (
     <Flex justify={"center"} align={"center"} direction="column">
-      <Text fontSize={40} zIndex={10} top={15}>
+      <Text fontSize={40} zIndex={10} top={15} textAlign="center">
         Mint your whitelist.
       </Text>
 
