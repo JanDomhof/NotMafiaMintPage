@@ -11,13 +11,24 @@
   font-family: "beth-ellen";
 }
 
-html {
+.computer {
   background: url(../public/background-pc.png) no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
   height: 100%;
+  width: 100%;
+}
+
+.mobile {
+  background: url(../public/background-mobile.png) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  height: 100%;
+  width: 100%;
 }
 
 body {

@@ -6,13 +6,28 @@ import NavBar from "./components/NavBar";
 import Mint from "./components/Mint";
 import FootBar from "./components/FootBar";
 import { Flex, Text, VStack } from "@chakra-ui/react";
+import useWindowDimensions from "./components/helpers/WindowDimensions";
 
 const address = "0xBAB9b565218d8B7517eFE2Cc35dB41EFfFbe0b9E";
+const html = document.getElementById("html");
 
 function App() {
   const [accounts, setAccounts] = useState([]);
   const [status, setStatus] = useState(0);
   const [tokenId, setTokenId] = useState(0);
+  const { width, height } = useWindowDimensions();
+
+  if (width > 640) {
+    if (!html.classList.contains("computer")) {
+      html.classList.add("computer");
+      html.classList.remove("mobile");
+    }
+  } else {
+    if (!html.classList.contains("mobile")) {
+      html.classList.add("mobile");
+      html.classList.remove("computer");
+    }
+  }
 
   useEffect(() => {
     const provider = new ethers.providers.Web3Provider(window.ethereum);

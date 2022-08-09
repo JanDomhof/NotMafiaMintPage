@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { ethers } from "ethers";
-import { Flex, Button, Text, Box, Image } from "@chakra-ui/react";
+import { Flex, Button, Text, Box, Image, VStack } from "@chakra-ui/react";
 import { keccak256 } from "ethers/lib/utils";
 import notMafia from "./helpers/NotMafiaCompiled.json";
 import MintField from "./icons/mint-field.svg";
@@ -126,7 +126,7 @@ const Mint = ({ accounts, address, status }) => {
   };
 
   return (
-    <Flex
+    <VStack
       justifyContent={"center"}
       alignItems={"center"}
       direction={"column"}
@@ -136,7 +136,12 @@ const Mint = ({ accounts, address, status }) => {
       <Text fontSize={50} textAlign={"center"} height="50px" marginTop={-20}>
         Picciotto,
       </Text>
-      <Flex position={"relative"} justify={"center"} align={"center"}>
+      <Flex
+        position={"relative"}
+        justify={"center"}
+        align={"center"}
+        height="300px"
+      >
         <Image src={MintField} height={"300px"} position="absolute"></Image>
         {!isConnected ? (
           <Text fontSize={30} zIndex={10}>
@@ -149,7 +154,7 @@ const Mint = ({ accounts, address, status }) => {
           ][status]
         )}
       </Flex>
-    </Flex>
+    </VStack>
   );
 };
 
