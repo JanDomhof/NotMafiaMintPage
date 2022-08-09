@@ -131,69 +131,26 @@ const Mint = ({ accounts, address, status }) => {
       alignItems={"center"}
       direction={"column"}
       width={"100%"}
-      height={"50%"}
       position={"relative"}
     >
-      <Image src={MintField} height={"300px"} position={"absolute"}></Image>
-      {!isConnected ? (
-        <Text fontSize={30} zIndex={10}>
-          Please connect your wallet.
-        </Text>
-      ) : (
-        [
-          <MintingClosed accounts={accounts} address={address} />,
-          <WhiteListMint accounts={accounts} address={address} />,
-        ][status]
-      )}
+      <Text fontSize={50} textAlign={"center"} height="50px" marginTop={-20}>
+        Picciotto,
+      </Text>
+      <Flex position={"relative"} justify={"center"} align={"center"}>
+        <Image src={MintField} height={"300px"} position="absolute"></Image>
+        {!isConnected ? (
+          <Text fontSize={30} zIndex={10}>
+            Please connect your wallet.
+          </Text>
+        ) : (
+          [
+            <MintingClosed accounts={accounts} address={address} />,
+            <WhiteListMint accounts={accounts} address={address} />,
+          ][status]
+        )}
+      </Flex>
     </Flex>
   );
 };
 
 export default Mint;
-
-/* <Flex justify="center" align="center" direction="column">
-      <Text fontSize="100" textShadow="inner">
-        NotMafia
-      </Text>
-      {!Boolean(accounts[0]) ? (
-        "Please connect your wallet."
-      ) : (
-        <>
-          {status === 0 ? (
-            <Text>Minting is closed.</Text>
-          ) : (
-            <>
-              {!isAllowedToMint() ? (
-                <>
-                  {status === 1 ? (
-                    <Text>Your address is not on the whitelist.</Text>
-                  ) : (
-                    <Text>Your address is not on the allowlist.</Text>
-                  )}
-                </>
-              ) : (
-                <>
-                  <Text fontSize={30}>{text}</Text>
-                  <Text fontSize={20}>{`Supply left: ${4444 - tokenId}`}</Text>
-                  {status === 3 ? renderSelectAmount() : <></>}
-                  <Flex>
-                    <Button
-                      onClick={handleMint}
-                      isLoading={minting}
-                      loadingText="Minting..."
-                      margin="30px"
-                      padding="20px"
-                      cursor="pointer"
-                      height="50px"
-                      disabled={disableButtons}
-                    >
-                      <Text fontSize="50">Mint</Text>
-                    </Button>
-                  </Flex>
-                </>
-              )}
-            </>
-          )}
-        </>
-      )}
-    </Flex> */

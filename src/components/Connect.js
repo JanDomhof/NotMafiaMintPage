@@ -22,11 +22,10 @@ const Connect = ({ accounts, setAccounts }) => {
     <Flex
       justify="center"
       align="center"
-      width="300px"
+      minWidth="300px"
       onClick={connectAccount}
       cursor={"pointer"}
       pointerEvents={isConnected ? "none" : "all"}
-      padding={"0 50px 0 0"}
     >
       <Image src={TextField} height={"100%"}></Image>
       <Text position={"absolute"} fontSize={"1.75em"}>

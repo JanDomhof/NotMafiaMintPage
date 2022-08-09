@@ -5,7 +5,7 @@ import OpenSea from "./icons/opensea-icon.png";
 
 const IconStack = () => {
   return (
-    <HStack spacing="60px" height="60px" padding={"0 0 0 50px"}>
+    <HStack spacing="60px" height="60px">
       <Link href="https://twitter.com/">
         <Image src={Twitter} boxSize="60px"></Image>
       </Link>

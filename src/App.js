@@ -5,7 +5,7 @@ import notMafia from "./components/helpers/NotMafiaCompiled.json";
 import NavBar from "./components/NavBar";
 import Mint from "./components/Mint";
 import FootBar from "./components/FootBar";
-import { Flex } from "@chakra-ui/react";
+import { Flex, Text, VStack } from "@chakra-ui/react";
 
 const address = "0xBAB9b565218d8B7517eFE2Cc35dB41EFfFbe0b9E";
 
