@@ -27,7 +27,7 @@ const Connect = ({ accounts, setAccounts }) => {
       cursor={"pointer"}
       pointerEvents={isConnected ? "none" : "all"}
     >
-      <Image src={TextField} height={"100%"}></Image>
+      <Image src={TextField} width={"90%"}></Image>
       <Text position={"absolute"} fontSize={"1.75em"}>
         {isConnected
           ? `${accounts[0].slice(0, 6)}...${accounts[0].slice(
