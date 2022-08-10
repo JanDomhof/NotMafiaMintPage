@@ -20,9 +20,8 @@ const Connect = ({ accounts, setAccounts }) => {
 
   return (
     <Flex
-      justify="center"
-      align="center"
-      minWidth="300px"
+      justify={"center"}
+      align={"center"}
       onClick={connectAccount}
       cursor={"pointer"}
       pointerEvents={isConnected ? "none" : "all"}
