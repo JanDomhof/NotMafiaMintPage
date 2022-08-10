@@ -58,57 +58,35 @@ const WhiteListMint = ({ accounts, address }) => {
     }
   };
 
-  return (
+  return isWhiteListed() ? (
     <VStack>
-      <Text
-        fontSize={isMobile ? 20 : 40}
-        zIndex={10}
-        top={15}
-        textAlign="center"
-      >
+      <Text fontSize={isMobile ? 20 : 40} zIndex={10}>
         Mint your whitelist.
       </Text>
-
-      {isWhiteListed() ? (
-        <Flex
-          justify={"center"}
-          align={"center"}
-          bottom={"15%"}
-          style={buttonStyle}
-        >
-          <Image
-            id={"mint-button"}
-            src={MintButton}
-            onClick={handleMint}
-            zIndex={10}
-            position={"absolute"}
-            borderRadius={"30%"}
-            width={"150px"}
-            cursor={"pointer"}
-          />
-          <Text
-            id={"mint-text"}
-            textColor={"white"}
-            fontSize={30}
-            zIndex={11}
-            textAlign={"center"}
-            pointerEvents="none"
-          >
-            Mint
-          </Text>
-        </Flex>
-      ) : (
+      <Flex zIndex={10} position="relative" justify={"center"} align={"center"}>
+        <Image
+          id={"mint-button"}
+          src={MintButton}
+          onClick={handleMint}
+          borderRadius={"30%"}
+          width={"150px"}
+          cursor={"pointer"}
+        />
         <Text
+          id={"mint-text"}
+          textColor={"white"}
           fontSize={30}
-          zIndex={11}
+          pointerEvents="none"
           position={"absolute"}
-          maxWidth={400}
-          textAlign={"center"}
         >
-          You are not on the whitelist. Free mint starts soon!
+          Mint
         </Text>
-      )}
+      </Flex>
     </VStack>
+  ) : (
+    <Text fontSize={30} zIndex={10}>
+      You are not on the whitelist.
+    </Text>
   );
 };
 

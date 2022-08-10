@@ -136,7 +136,13 @@ const Mint = ({ accounts, address, status }) => {
       width={"100%"}
       position={"relative"}
     >
-      <Text fontSize={50} textAlign={"center"} height="50px" marginTop={-20}>
+      <Text
+        fontSize={50}
+        textAlign={"center"}
+        height="50px"
+        marginTop={-20}
+        marginBottom={isMobile ? -10 : 50}
+      >
         Picciotto,
       </Text>
       <Flex
