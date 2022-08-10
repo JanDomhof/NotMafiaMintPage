@@ -30,24 +30,24 @@ function App() {
   }
 
   useEffect(() => {
-    if (window.ethereum) {
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
-      const contract = new ethers.Contract(address, notMafia.abi, provider);
-      contract.on("ChangedStatus", (newStatus) => {
-        setStatus(newStatus);
-      });
-      contract.on("Transfer", (_from, _to, amount) => {
-        setTokenId(tokenId + amount);
-      });
-      async function fetchFromContract() {
-        const currentStatus = await contract.status();
-        setStatus(currentStatus);
+    // if (window.ethereum) {
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const contract = new ethers.Contract(address, notMafia.abi, provider);
+    contract.on("ChangedStatus", (newStatus) => {
+      setStatus(newStatus);
+    });
+    contract.on("Transfer", (_from, _to, amount) => {
+      setTokenId(tokenId + amount);
+    });
+    async function fetchFromContract() {
+      const currentStatus = await contract.status();
+      setStatus(currentStatus);
 
-        const currentTokenId = await contract.getCurrentTokenId();
-        setTokenId(currentTokenId);
-      }
-      fetchFromContract();
+      const currentTokenId = await contract.getCurrentTokenId();
+      setTokenId(currentTokenId);
     }
+    fetchFromContract();
+    // }
   }, []);
 
   return (

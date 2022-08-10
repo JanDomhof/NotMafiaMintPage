@@ -7,10 +7,13 @@ import MintField from "./icons/mint-field.svg";
 import MintingClosed from "./mint/MintingClosed";
 import WhiteListMint from "./mint/WhiteListMint";
 import allowListTree from "./helpers/AllowList";
+import useWindowDimensions from "./helpers/WindowDimensions";
 
 const Mint = ({ accounts, address, status }) => {
   const [mintAmount, setMintAmount] = useState(1);
   const [disableButtons, setDisableButtons] = useState(false);
+  const { width, height } = useWindowDimensions();
+  const isMobile = width < height;
 
   const isConnected = Boolean(accounts[0]);
 
@@ -137,15 +140,15 @@ const Mint = ({ accounts, address, status }) => {
         Picciotto,
       </Text>
       <Flex
-        position={"relative"}
         justify={"center"}
         align={"center"}
-        height="300px"
-        width={"100%"}
+        height={"300px"}
+        width={isMobile ? "350px" : "500px"}
+        position={"relative"}
       >
-        <Image src={MintField} maxWidth={"500px"} position="absolute"></Image>
+        <Image src={MintField} width={"100%"} position="absolute"></Image>
         {!isConnected ? (
-          <Text fontSize={30} zIndex={10} textAlign="center">
+          <Text fontSize={30} maxWidth={"100%"} maxHeight={"100%"} zIndex={10}>
             Please connect your wallet.
           </Text>
         ) : (

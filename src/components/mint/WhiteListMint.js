@@ -1,14 +1,17 @@
 import { useState } from "react";
 import { ethers } from "ethers";
-import { Text, Image, Flex } from "@chakra-ui/react";
+import { Text, Image, Flex, VStack } from "@chakra-ui/react";
 import { keccak256 } from "ethers/lib/utils";
 import compiledContract from "../helpers/NotMafiaCompiled.json";
 import whiteListTree from "../helpers/WhiteList";
 import MintButton from "../icons/mint-normal.svg";
+import useWindowDimensions from "../helpers/WindowDimensions";
 
 const WhiteListMint = ({ accounts, address }) => {
   const [buttonStyle, setButtonStyle] = useState({});
   const [mintTimedOut, setMintTimedOut] = useState(false);
+  const { width, height } = useWindowDimensions();
+  const isMobile = width < height;
 
   const isWhiteListed = () => {
     const root = whiteListTree.getHexRoot();
@@ -56,8 +59,13 @@ const WhiteListMint = ({ accounts, address }) => {
   };
 
   return (
-    <Flex justify={"center"} align={"center"} direction="column">
-      <Text fontSize={40} zIndex={10} top={15} textAlign="center">
+    <VStack>
+      <Text
+        fontSize={isMobile ? 20 : 40}
+        zIndex={10}
+        top={15}
+        textAlign="center"
+      >
         Mint your whitelist.
       </Text>
 
@@ -100,7 +108,7 @@ const WhiteListMint = ({ accounts, address }) => {
           You are not on the whitelist. Free mint starts soon!
         </Text>
       )}
-    </Flex>
+    </VStack>
   );
 };
 

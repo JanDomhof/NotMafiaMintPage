@@ -9,6 +9,7 @@
 }
 * {
   font-family: "beth-ellen";
+  text-align: center;
 }
 
 .computer {
@@ -19,6 +20,7 @@
   background-size: cover;
   height: 100%;
   width: 100%;
+  overflow: hidden;
 }
 
 .mobile {
@@ -32,7 +34,6 @@
 }
 
 body {
-  overflow: hidden;
   height: 100%;
 }
 

@@ -4,9 +4,10 @@ import useWindowDimensions from "./helpers/WindowDimensions";
 
 const FootBar = ({ tokenId }) => {
   const { width, height } = useWindowDimensions();
+  const isMobile = width > height;
   return (
     <>
-      {width > height ? (
+      {width > 1030 ? (
         <HStack margin={"0 150px 70px 150px"}>
           <Flex
             justify={"center"}
@@ -43,9 +44,9 @@ const FootBar = ({ tokenId }) => {
             cursor={"pointer"}
             pointerEvents={"none"}
           >
-            <Image src={TextField} height="50px" width={"600px"}></Image>
+            <Image src={TextField} height="50px" width={"200px"}></Image>
             <Text position={"absolute"} fontSize={"1.5em"}>
-              {`${tokenId}/4444 minted`}
+              {`${tokenId}/4444`}
             </Text>
           </Flex>
           <Spacer />
@@ -54,11 +55,10 @@ const FootBar = ({ tokenId }) => {
             align={"center"}
             cursor={"pointer"}
             pointerEvents={"none"}
-            overflow={"hidden"}
           >
-            <Image src={TextField} height="50px" width={"500px"}></Image>
+            <Image src={TextField} height="50px" width={"400px"}></Image>
             <Text position={"absolute"} fontSize={"1.5em"}>
-              First 2222 free, then 0.01312
+              2222 free {">"} 2222 0.01312
             </Text>
           </Flex>
         </VStack>
