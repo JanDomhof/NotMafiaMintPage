@@ -1,12 +1,8 @@
 @font-face {
-  font-family: "nanum";
-  src: url(../public/NanumBrushScript-Regular.ttf);
-}
-
-@font-face {
   font-family: "beth-ellen";
   src: url(../public/BethEllen-Regular.ttf);
 }
+
 * {
   font-family: "beth-ellen";
   text-align: center;
