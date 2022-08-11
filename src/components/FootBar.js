@@ -56,7 +56,7 @@ const FootBar = ({ tokenId }) => {
             cursor={"pointer"}
             pointerEvents={"none"}
           >
-            <Image src={TextField} height="50px" width={"400px"}></Image>
+            <Image src={TextField} height="50px" width={"380px"}></Image>
             <Text position={"absolute"} fontSize={"1.5em"}>
               2222 free {">"} 2222 0.01312
             </Text>

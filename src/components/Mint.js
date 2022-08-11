@@ -5,7 +5,8 @@ import { keccak256 } from "ethers/lib/utils";
 import notMafia from "./helpers/NotMafiaCompiled.json";
 import MintField from "./icons/mint-field.svg";
 import MintingClosed from "./mint/MintingClosed";
-import WhiteListMint from "./mint/WhiteListMint";
+import SimpleMint from "./mint/SimpleMint";
+import SaleMint from "./mint/SaleMint";
 import allowListTree from "./helpers/AllowList";
 import useWindowDimensions from "./helpers/WindowDimensions";
 
@@ -69,14 +70,6 @@ const Mint = ({ accounts, address, status }) => {
         allowListTree.getHexProof(keccak256(accounts[0]), {
           value: "0.00",
         })
-      );
-    } else if (status === 3) {
-      response = await contract.saleMint(
-        allowListTree.getHexProof(keccak256(accounts[0])),
-        mintAmount,
-        {
-          value: ethers.utils.parseEther((mintAmount * 0.01312).toString()),
-        }
       );
     }
     return response;
@@ -160,7 +153,13 @@ const Mint = ({ accounts, address, status }) => {
         ) : (
           [
             <MintingClosed accounts={accounts} address={address} />,
-            <WhiteListMint accounts={accounts} address={address} />,
+            <SimpleMint
+              accounts={accounts}
+              address={address}
+              type={"WHITELIST"}
+            />,
+            <SimpleMint accounts={accounts} address={address} type={"FREE"} />,
+            <SaleMint accounts={accounts} address={address} />,
           ][status]
         )}
       </Flex>

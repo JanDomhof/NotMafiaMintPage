@@ -5,10 +5,10 @@ import notMafia from "./components/helpers/NotMafiaCompiled.json";
 import NavBar from "./components/NavBar";
 import Mint from "./components/Mint";
 import FootBar from "./components/FootBar";
-import { Flex, Text, VStack } from "@chakra-ui/react";
+import { Flex } from "@chakra-ui/react";
 import useWindowDimensions from "./components/helpers/WindowDimensions";
 
-const address = "0xBAB9b565218d8B7517eFE2Cc35dB41EFfFbe0b9E";
+const address = "0x7fc1A017F6fD866c0AbA3586e59fA13b5Ce296eC";
 const html = document.getElementById("html");
 
 function App() {

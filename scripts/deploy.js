@@ -8,7 +8,13 @@ const hre = require("hardhat");
 
 async function main() {
   const NotMafia = await hre.ethers.getContractFactory("NotMafia");
-  const notMafia = await NotMafia.deploy("NotMafia", "NMF", "test_uri");
+  const notMafia = await NotMafia.deploy(
+    "NotMafia",
+    "NMF",
+    "TEST_URI",
+    "TEST_PROVENANCE",
+    hre.ethers.utils.parseEther((0.01312).toString())
+  );
 
   await notMafia.deployed();
 
