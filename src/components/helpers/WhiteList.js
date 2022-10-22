@@ -9,6 +9,7 @@ const addresses = [
   "0xDE8D5aE4c54e4De86AFeF3B9FE35B40D88194d61",
   "0x44479d182144Aeb39Da931c9Ef69F478538972ea",
 ];
+
 const leaves = addresses.map((x) => keccak256(x));
 const whiteListTree = new MerkleTree(leaves, keccak256, { sortPairs: true });
 
