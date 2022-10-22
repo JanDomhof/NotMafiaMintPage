@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { ethers } from "ethers";
-import { Text, Image, Flex, VStack } from "@chakra-ui/react";
-
-import MintButton from "../icons/mint-normal.svg";
-
 import useWindowDimensions from "../helpers/WindowDimensions";
+
+import { Text, VStack } from "@chakra-ui/react";
+import MintButton from "./MintButton";
+
 import compiledContract from "../helpers/NotMafiaCompiled.json";
 import whiteListTree from "../helpers/WhiteList";
 import allowListTree from "../helpers/AllowList";
@@ -16,7 +16,7 @@ const SimpleMint = ({ accounts, address, type }) => {
   const { width, height } = useWindowDimensions();
   const isMobile = width < height;
 
-  const isWhiteListed = () => {
+  const isAllowed = () => {
     let tree;
     if (type == "WHITELIST") {
       tree = whiteListTree;
@@ -64,30 +64,12 @@ const SimpleMint = ({ accounts, address, type }) => {
     }
   };
 
-  return isWhiteListed() ? (
-    <VStack>
-      <Text fontSize={isMobile ? 20 : 40} zIndex={10}>
+  return isAllowed() ? (
+    <VStack zIndex={10} paddingBottom="15px">
+      <Text fontSize={isMobile ? 20 : 40}>
         {type == "WHITELIST" ? "Mint your whitelist." : "Mint one for free."}
       </Text>
-      <Flex zIndex={10} position="relative" justify={"center"} align={"center"}>
-        <Image
-          id={"mint-button"}
-          src={MintButton}
-          onClick={handleMint}
-          borderRadius={"30%"}
-          width={"150px"}
-          cursor={"pointer"}
-        />
-        <Text
-          id={"mint-text"}
-          textColor={"white"}
-          fontSize={30}
-          pointerEvents="none"
-          position={"absolute"}
-        >
-          Mint
-        </Text>
-      </Flex>
+      <MintButton handleMint={handleMint} />
     </VStack>
   ) : (
     <Text fontSize={30} zIndex={10}>

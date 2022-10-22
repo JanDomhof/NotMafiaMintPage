@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Flex, Image, Text } from "@chakra-ui/react";
-import TextField from "./icons/text-field.svg";
+import "../App.css";
 
-const Connect = ({ accounts, setAccounts }) => {
+const Connect = ({ accounts, setAccounts, isMobile }) => {
   const isConnected = Boolean(accounts[0]);
 
   async function connectAccount() {
@@ -20,14 +20,19 @@ const Connect = ({ accounts, setAccounts }) => {
 
   return (
     <Flex
+      className={isMobile ? "mobile-field" : ""}
+      bg={"white"}
+      border={"5px solid"}
+      height={"50px"}
+      borderRadius={"20px"}
+      padding={"0 20px 0 20px"}
       justify={"center"}
       align={"center"}
       onClick={connectAccount}
       cursor={"pointer"}
       pointerEvents={isConnected ? "none" : "all"}
     >
-      <Image src={TextField} width={"90%"}></Image>
-      <Text position={"absolute"} fontSize={"1.75em"}>
+      <Text fontSize={"1.75em"}>
         {isConnected
           ? `${accounts[0].slice(0, 6)}...${accounts[0].slice(
               accounts[0].length - 5,

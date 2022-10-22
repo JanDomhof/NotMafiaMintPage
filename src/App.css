@@ -37,7 +37,7 @@ body {
   height: 100%;
 }
 
-#mint-button:hover ~ #mint-text {
+#hoverable:hover {
   color: #ff0000;
   text-shadow: 0 0 5px #ff0000, 0 0 10px #ff0000, 0 0 20px #ff0000;
 }

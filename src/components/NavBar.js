@@ -1,24 +1,30 @@
-import { Flex, HStack, Spacer, VStack } from "@chakra-ui/react";
+import { HStack, Spacer, VStack } from "@chakra-ui/react";
 import IconStack from "./IconStack";
 import Connect from "./Connect";
-import useWindowDimensions from "./helpers/WindowDimensions";
 
-const NavBar = ({ accounts, setAccounts }) => {
-  const { width, height } = useWindowDimensions();
+const NavBar = ({ accounts, setAccounts, isMobile }) => {
   return (
     <>
-      {width > height ? (
-        <HStack padding={"30px"}>
-          <IconStack />
+      {isMobile ? (
+        <VStack paddingTop="30px">
+          <IconStack isMobile={isMobile} />
           <Spacer />
-          <Connect accounts={accounts} setAccounts={setAccounts} />
-        </HStack>
-      ) : (
-        <VStack padding={"30px"}>
-          <IconStack />
-          <Spacer />
-          <Connect accounts={accounts} setAccounts={setAccounts} />
+          <Connect
+            accounts={accounts}
+            setAccounts={setAccounts}
+            isMobile={isMobile}
+          />
         </VStack>
+      ) : (
+        <HStack paddingTop={"50px"}>
+          <IconStack isMobile={isMobile} />
+          <Spacer />
+          <Connect
+            accounts={accounts}
+            setAccounts={setAccounts}
+            isMobile={isMobile}
+          />
+        </HStack>
       )}
     </>
   );

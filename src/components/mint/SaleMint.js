@@ -1,18 +1,11 @@
 import { useState } from "react";
 import { ethers } from "ethers";
-import {
-  Text,
-  Image,
-  Flex,
-  VStack,
-  HStack,
-  Button,
-  Spacer,
-} from "@chakra-ui/react";
-
-import MintButton from "../icons/mint-normal.svg";
-
 import useWindowDimensions from "../helpers/WindowDimensions";
+
+import { Text, VStack, HStack, Spacer } from "@chakra-ui/react";
+import AmountButton from "./AmountButton";
+import MintButton from "./MintButton";
+
 import compiledContract from "../helpers/NotMafiaCompiled.json";
 import allowListTree from "../helpers/AllowList";
 import { keccak256 } from "ethers/lib/utils";
@@ -76,61 +69,18 @@ const SaleMint = ({ accounts, address }) => {
   };
 
   return isAllowListed() ? (
-    <VStack>
-      <Text fontSize={isMobile ? 20 : 30} zIndex={10} maxW={"70%"} margin={0}>
+    <VStack paddingBottom="15px">
+      <Text fontSize={isMobile ? 20 : 30} zIndex={10} width="300px" margin="0">
         How many do you want to mint?
       </Text>
-      <HStack zIndex={10} width="35%">
-        <Button
-          bg="black"
-          border="none"
-          textColor={"white"}
-          borderRadius={"50%"}
-          height={"35px"}
-          width={"35px"}
-          onClick={handleDecrement}
-          cursor="pointer"
-          fontSize={30}
-        >
-          -
-        </Button>
+      <HStack zIndex={10} width="60%">
+        <AmountButton text="-" onClick={handleDecrement} />
         <Spacer />
         <Text fontSize={"20"}>{mintAmount}</Text>
         <Spacer />
-        <Button
-          colorScheme={"red"}
-          border="none"
-          bg="black"
-          textColor={"white"}
-          borderRadius={"50%"}
-          height={"35px"}
-          width={"35px"}
-          onClick={handleIncrement}
-          cursor="pointer"
-          fontSize={30}
-        >
-          +
-        </Button>
+        <AmountButton text="+" onClick={handleIncrement} />
       </HStack>
-      <Flex zIndex={10} position="relative" justify={"center"} align={"center"}>
-        <Image
-          id={"mint-button"}
-          src={MintButton}
-          onClick={handleMint}
-          borderRadius={"30%"}
-          width={"120px"}
-          cursor={"pointer"}
-        />
-        <Text
-          id={"mint-text"}
-          textColor={"white"}
-          fontSize={25}
-          pointerEvents="none"
-          position={"absolute"}
-        >
-          Mint
-        </Text>
-      </Flex>
+      <MintButton handleMint={handleMint} />
     </VStack>
   ) : (
     <Text fontSize={30} zIndex={10}>

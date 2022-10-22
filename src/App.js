@@ -17,7 +17,9 @@ function App() {
   const [tokenId, setTokenId] = useState(0);
   const { width, height } = useWindowDimensions();
 
-  if (width > 640) {
+  const isMobile = width < 750;
+
+  if (!isMobile) {
     if (!html.classList.contains("computer")) {
       html.classList.add("computer");
       html.classList.remove("mobile");
@@ -51,10 +53,24 @@ function App() {
   }, []);
 
   return (
-    <Flex height={"100%"} direction="column" justify={"space-between"}>
-      <NavBar accounts={accounts} setAccounts={setAccounts} />
-      <Mint accounts={accounts} address={address} status={status} />
-      <FootBar address={address} tokenId={tokenId} />
+    <Flex
+      height="100%"
+      direction="column"
+      justify="space-between"
+      padding="0 5% 0 5%"
+    >
+      <NavBar
+        accounts={accounts}
+        setAccounts={setAccounts}
+        isMobile={isMobile}
+      />
+      <Mint
+        accounts={accounts}
+        address={address}
+        status={status}
+        isMobile={isMobile}
+      />
+      <FootBar address={address} tokenId={tokenId} isMobile={isMobile} />
     </Flex>
   );
 }

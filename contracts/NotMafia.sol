@@ -27,9 +27,12 @@ contract NotMafia is ERC721A, Ownable, ReentrancyGuard {
     }
 
     Status public status;
-    string public baseURI;
-    string public provenance;
     uint256 public price;
+    string public provenance;
+
+    bool public revealed;
+    string public notRevealedURI;
+    string public baseURI;
 
     uint256 private tokenId;
 
@@ -44,13 +47,7 @@ contract NotMafia is ERC721A, Ownable, ReentrancyGuard {
     mapping(address => bool) private hasMintedFree;
     mapping(address => uint256) private hasMintedSale;
 
-    event ChangedPrice(uint256 price);
     event ChangedStatus(uint256 newStatus);
-    event ChangedBaseURI(string newURI);
-    event ChangedMerkleRoot(bytes32 newMerkleRoot);
-    event ChangedTeamWalletAddress(address newAddress);
-    event ChangedProvenance(string provenance);
-    event WithdrawnAmount(uint256 amount, address to);
 
     // Constructor
     constructor(
@@ -123,6 +120,7 @@ contract NotMafia is ERC721A, Ownable, ReentrancyGuard {
             tokenId = current + __amount;
             hasMintedSale[msg.sender] = amountMinted + __amount;
         }
+
         _safeMint(msg.sender, __amount);
     }
 
@@ -145,9 +143,30 @@ contract NotMafia is ERC721A, Ownable, ReentrancyGuard {
             );
     }
 
-    // Getters
+    function tokenURI(uint256 __tokenId)
+        public
+        view
+        virtual
+        override
+        returns (string memory)
+    {
+        if (!_exists(__tokenId)) revert URIQueryForNonexistentToken();
+        if (!revealed) return notRevealedURI;
+
+        string memory __baseURI = baseURI;
+        return
+            bytes(__baseURI).length != 0
+                ? string(abi.encodePacked(__baseURI, _toString(__tokenId)))
+                : "";
+    }
+
+    // Getters - External
     function getCurrentTokenId() external view returns (uint256) {
         return tokenId;
+    }
+
+    function getHasMintedFree(address __address) external view returns (bool) {
+        return hasMintedFree[__address];
     }
 
     function getHasMintedWhiteList(address __address)
@@ -158,10 +177,6 @@ contract NotMafia is ERC721A, Ownable, ReentrancyGuard {
         return hasMintedWhiteList[__address];
     }
 
-    function getHasMintedFree(address __address) external view returns (bool) {
-        return hasMintedFree[__address];
-    }
-
     function getHasMintedSale(address __address)
         external
         view
@@ -170,7 +185,7 @@ contract NotMafia is ERC721A, Ownable, ReentrancyGuard {
         return hasMintedSale[__address];
     }
 
-    // Setters
+    // Setters - Only Owner
     function setStatus(uint256 __status) external onlyOwner {
         status = Status(__status);
         emit ChangedStatus(__status);
@@ -178,32 +193,26 @@ contract NotMafia is ERC721A, Ownable, ReentrancyGuard {
 
     function setBaseURI(string memory __newURI) external onlyOwner {
         baseURI = __newURI;
-        emit ChangedBaseURI(__newURI);
     }
 
     function setAllowListRoot(bytes32 __root) external onlyOwner {
         allowListRoot = __root;
-        emit ChangedMerkleRoot(__root);
     }
 
     function setWhiteListRoot(bytes32 __root) external onlyOwner {
         whiteListRoot = __root;
-        emit ChangedMerkleRoot(__root);
     }
 
     function setProvenanceHash(string memory __hash) external onlyOwner {
         provenance = __hash;
-        emit ChangedProvenance(__hash);
     }
 
     function setPrice(uint256 __price) external onlyOwner {
         price = __price;
-        emit ChangedPrice(__price);
     }
 
     // Withdraw Funds From Contract
     function withdraw() external nonReentrant onlyOwner {
         payable(msg.sender).transfer(address(this).balance);
-        emit WithdrawnAmount(address(this).balance, msg.sender);
     }
 }
