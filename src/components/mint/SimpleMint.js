@@ -18,7 +18,7 @@ const SimpleMint = ({ accounts, address, type }) => {
 
   const isAllowed = () => {
     let tree;
-    if (type == "WHITELIST") {
+    if (type === "WHITELIST") {
       tree = whiteListTree;
     } else {
       tree = allowListTree;
@@ -48,7 +48,7 @@ const SimpleMint = ({ accounts, address, type }) => {
       );
       try {
         let response;
-        if (type == "WHITELIST") {
+        if (type === "WHITELIST") {
           response = await contract.whiteListMint(
             whiteListTree.getHexProof(keccak256(accounts[0]))
           );
@@ -67,13 +67,13 @@ const SimpleMint = ({ accounts, address, type }) => {
   return isAllowed() ? (
     <VStack zIndex={10} paddingBottom="15px">
       <Text fontSize={isMobile ? 20 : 40}>
-        {type == "WHITELIST" ? "Mint your whitelist." : "Mint one for free."}
+        {type === "WHITELIST" ? "Mint your whitelist." : "Mint one for free."}
       </Text>
       <MintButton handleMint={handleMint} />
     </VStack>
   ) : (
     <Text fontSize={30} zIndex={10}>
-      {type == "WHITELIST"
+      {type === "WHITELIST"
         ? "You are not on the whitelist."
         : "You are not on the allowlist."}
     </Text>

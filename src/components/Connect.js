@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { Flex, Image, Text } from "@chakra-ui/react";
+import { Flex, Text } from "@chakra-ui/react";
 import "../App.css";
 
 const Connect = ({ accounts, setAccounts, isMobile }) => {

@@ -2,11 +2,11 @@ import { Flex, Text, VStack } from "@chakra-ui/react";
 import MintingClosed from "./mint/MintingClosed";
 import SimpleMint from "./mint/SimpleMint";
 import SaleMint from "./mint/SaleMint";
-import useWindowDimensions from "./helpers/WindowDimensions";
+// import useWindowDimensions from "./helpers/WindowDimensions";
 
 const Mint = ({ accounts, address, status }) => {
-  const { width, height } = useWindowDimensions();
-  const isMobile = width < height;
+  // const { width, height } = useWindowDimensions();
+  // const isMobile = width < height;
 
   const isConnected = Boolean(accounts[0]);
 
