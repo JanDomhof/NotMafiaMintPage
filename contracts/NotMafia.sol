@@ -36,9 +36,18 @@ contract NotMafia is ERC721A, Ownable, ReentrancyGuard {
 
     bytes32 public whiteListRoot;
 
+    /**
+     * Token id allocation:
+     *
+     * |  WHITELIST  |  |     FREE      |  |     PAID      |
+     * |    1 pw     |  |     1 pw      |  |     3 pw      |
+     * [0, ..., 1700 ]  [1701, ..., 2222]  [2223, ..., 4444]
+     *
+     */
     uint256 private tokenId;
-    uint256 private constant TOTAL_SUPPLY = 4444;
+    uint256 private constant TOTAL_WHITELIST_SUPPLY = 1700;
     uint256 private constant TOTAL_FREE_SUPPLY = 2222;
+    uint256 private constant TOTAL_SUPPLY = 4444;
     uint256 private constant MAX_PER_WALLET_PUBLIC = 3;
 
     mapping(address => bool) private hasMintedWhiteList;
