@@ -7,7 +7,6 @@ import MintButton from "./MintButton";
 
 import compiledContract from "../helpers/NotMafiaCompiled.json";
 import whiteListTree from "../helpers/WhiteList";
-import allowListTree from "../helpers/AllowList";
 import { keccak256 } from "ethers/lib/utils";
 
 const SimpleMint = ({ accounts, address, type }) => {
@@ -17,16 +16,13 @@ const SimpleMint = ({ accounts, address, type }) => {
   const isMobile = width < height;
 
   const isAllowed = () => {
-    let tree;
-    if (type === "WHITELIST") {
-      tree = whiteListTree;
-    } else {
-      tree = allowListTree;
+    if (type === "FREE") {
+      return true;
     }
-    const root = tree.getHexRoot();
+    const root = whiteListTree.getHexRoot();
     const leaf = keccak256(accounts[0]);
-    const proof = tree.getHexProof(leaf);
-    return tree.verify(proof, leaf, root);
+    const proof = whiteListTree.getHexProof(leaf);
+    return whiteListTree.verify(proof, leaf, root);
   };
 
   const handleMint = async () => {
@@ -53,9 +49,7 @@ const SimpleMint = ({ accounts, address, type }) => {
             whiteListTree.getHexProof(keccak256(accounts[0]))
           );
         } else {
-          response = await contract.freeMint(
-            whiteListTree.getHexProof(keccak256(accounts[0]))
-          );
+          response = await contract.freeMint();
         }
         console.log(`mint successfull, response: ${response}`);
       } catch (e) {

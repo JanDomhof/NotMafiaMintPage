@@ -17,7 +17,7 @@ function App() {
   const [tokenId, setTokenId] = useState(0);
   const { width, height } = useWindowDimensions();
 
-  const isMobile = width < 750;
+  const isMobile = width < height;
 
   if (!isMobile) {
     if (!html.classList.contains("computer")) {
