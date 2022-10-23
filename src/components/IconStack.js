@@ -6,7 +6,7 @@ import OpenSea from "./icons/opensea-icon.png";
 const IconStack = ({ isMobile }) => {
   return (
     <HStack width="305px" height="60px">
-      <Link href="https://twitter.com/" borderRadius="50%">
+      <Link href="https://twitter.com/notmafianft" borderRadius="50%">
         <Image src={Twitter} boxSize="60px" borderRadius="50%"></Image>
       </Link>
       <Spacer />
