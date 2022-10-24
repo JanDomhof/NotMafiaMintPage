@@ -56,7 +56,7 @@ const SaleMint = ({ accounts, address }) => {
     }
   };
 
-  return isAllowListed() ? (
+  return (
     <VStack paddingBottom="15px">
       <Text fontSize={isMobile ? 20 : 30} zIndex={10} width="300px" margin="0">
         How many do you want to mint?
@@ -70,10 +70,6 @@ const SaleMint = ({ accounts, address }) => {
       </HStack>
       <MintButton handleMint={handleMint} />
     </VStack>
-  ) : (
-    <Text fontSize={30} zIndex={10}>
-      You are not on the allowlist.
-    </Text>
   );
 };
 

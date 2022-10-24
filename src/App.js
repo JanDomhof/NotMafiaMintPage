@@ -15,9 +15,20 @@ function App() {
   const [accounts, setAccounts] = useState([]);
   const [status, setStatus] = useState(0);
   const [tokenId, setTokenId] = useState(0);
-  const { width, height } = useWindowDimensions();
 
-  const isMobile = width < height;
+  const [width, setWidth] = useState(window.innerWidth);
+
+  function handleWindowSizeChange() {
+    setWidth(window.innerWidth);
+  }
+  useEffect(() => {
+    window.addEventListener("resize", handleWindowSizeChange);
+    return () => {
+      window.removeEventListener("resize", handleWindowSizeChange);
+    };
+  }, []);
+
+  const isMobile = width <= 768;
 
   if (!isMobile) {
     if (!html.classList.contains("computer")) {
