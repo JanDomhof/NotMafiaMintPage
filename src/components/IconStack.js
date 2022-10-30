@@ -11,13 +11,13 @@ const IconStack = ({ isMobile }) => {
       </Link>
       <Spacer />
       <Link
-        href="https://goerli.etherscan.io/address/0x7Ff195Ea150209257E209a1EeE0f822bd3F153d3"
+        href="https://etherscan.io/address/0x4dbcf9e0c47cb66b3c335671faabee4798d75dfc"
         borderRadius="50%"
       >
         <Image src={Etherscan} boxSize="60px" borderRadius="50%"></Image>
       </Link>
       <Spacer />
-      <Link href="https://opensea.io/" borderRadius="50%">
+      <Link href="https://opensea.io/collection/notmafia" borderRadius="50%">
         <Image src={OpenSea} boxSize="60px" borderRadius="50%"></Image>
       </Link>
     </HStack>
