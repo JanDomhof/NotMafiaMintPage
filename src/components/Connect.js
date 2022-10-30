@@ -19,10 +19,10 @@ const Connect = ({ accounts, setAccounts, isMobile }) => {
 
   return (
     <Flex
-      className={isMobile ? "mobile-field" : ""}
       bg={"white"}
       border={"5px solid"}
       height={"50px"}
+      width={isMobile ? "85%" : ""}
       borderRadius={"20px"}
       padding={"0 20px 0 20px"}
       justify={"center"}

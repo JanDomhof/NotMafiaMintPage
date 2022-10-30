@@ -9,7 +9,7 @@ export default ({ text, width }) => {
       borderRadius="20px"
       height="50px"
       width={width}
-      fontSize="1.5em"
+      fontSize="1.3em"
       justify="center"
       align="center"
     >

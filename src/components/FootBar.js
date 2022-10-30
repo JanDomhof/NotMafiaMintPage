@@ -13,9 +13,9 @@ const FootBar = ({ tokenId, isMobile }) => {
 
   const innerMobile = (
     <>
-      <TextFieldFixed text={`${tokenId}/4444 minted`} width="275px" />
+      <TextFieldFixed text={`${tokenId}/4444 minted`} width="90%" />
       <Spacer />
-      <TextField text={"2222 free, then 0.00869"} />
+      <TextFieldFixed text={`2222 free, then 0.00869`} width="90%" />
     </>
   );
 
@@ -24,7 +24,7 @@ const FootBar = ({ tokenId, isMobile }) => {
       {isMobile ? (
         <VStack marginBottom="30px">{innerMobile}</VStack>
       ) : (
-        <HStack marginBottom={"50px"}>{inner}</HStack>
+        <HStack marginBottom="50px">{inner}</HStack>
       )}
     </>
   );
