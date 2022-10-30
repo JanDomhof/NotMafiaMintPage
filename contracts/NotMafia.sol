@@ -52,7 +52,7 @@ contract NotMafia is ERC721A, Ownable, ReentrancyGuard {
     event ChangedStatus(uint256 newStatus);
 
     // Constructor
-    constructor() ERC721A("Not Mafia", "NTMF") {
+    constructor() ERC721A("notmafia", "NTMF") {
         status = Status.CLOSED;
         price = 0.00869 ether;
         tokenId = 1;
