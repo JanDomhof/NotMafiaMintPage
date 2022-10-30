@@ -28,8 +28,6 @@ contract NotMafia is ERC721A, Ownable, ReentrancyGuard {
     Status public status;
     uint256 public price;
 
-    bool public revealed;
-    string public preRevealURI;
     string public baseURI;
 
     bytes32 public whiteListRoot;
@@ -58,7 +56,6 @@ contract NotMafia is ERC721A, Ownable, ReentrancyGuard {
         status = Status.CLOSED;
         price = 0.00869 ether;
         tokenId = 1;
-        revealed = false;
     }
 
     /**
@@ -142,12 +139,13 @@ contract NotMafia is ERC721A, Ownable, ReentrancyGuard {
         returns (string memory)
     {
         if (!_exists(__tokenId)) revert URIQueryForNonexistentToken();
-        if (!revealed) return preRevealURI;
 
         string memory __baseURI = baseURI;
         return
             bytes(__baseURI).length != 0
-                ? string(abi.encodePacked(__baseURI, _toString(__tokenId)))
+                ? string(
+                    abi.encodePacked(__baseURI, _toString(__tokenId), ".json")
+                )
                 : "";
     }
 
@@ -248,16 +246,8 @@ contract NotMafia is ERC721A, Ownable, ReentrancyGuard {
         emit ChangedStatus(__status);
     }
 
-    function setRevealed(bool __revealed) external onlyOwner {
-        revealed = __revealed;
-    }
-
     function setBaseURI(string memory __newURI) external onlyOwner {
         baseURI = __newURI;
-    }
-
-    function setPreRevealURI(string memory __newURI) external onlyOwner {
-        preRevealURI = __newURI;
     }
 
     function setWhiteListRoot(bytes32 __root) external onlyOwner {
