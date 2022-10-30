@@ -16,7 +16,9 @@ const Mint = ({ accounts, address, status }) => {
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     const signer = provider.getSigner();
     const contract = new ethers.Contract(address, compiledContract.abi, signer);
-    return await contract.getCurrentTokenId();
+    const tokenId = await contract.getCurrentTokenId();
+    console.log(tokenId);
+    return tokenId;
   };
 
   return (
