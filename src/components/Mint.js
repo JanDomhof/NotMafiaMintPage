@@ -2,24 +2,13 @@ import { Flex, Text, VStack } from "@chakra-ui/react";
 import MintingClosed from "./mint/MintingClosed";
 import SimpleMint from "./mint/SimpleMint";
 import SaleMint from "./mint/SaleMint";
-import { ethers } from "ethers";
-import compiledContract from "./helpers/NotMafiaCompiled.json";
 // import useWindowDimensions from "./helpers/WindowDimensions";
 
-const Mint = ({ accounts, address, status }) => {
+const Mint = ({ accounts, address, status, tokenId }) => {
   // const { width, height } = useWindowDimensions();
   // const isMobile = width < height;
 
   const isConnected = Boolean(accounts[0]);
-
-  const getAmountMinted = async () => {
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
-    const signer = provider.getSigner();
-    const contract = new ethers.Contract(address, compiledContract.abi, signer);
-    const tokenId = await contract.getCurrentTokenId();
-    console.log(tokenId);
-    return tokenId;
-  };
 
   return (
     <VStack>
@@ -46,7 +35,7 @@ const Mint = ({ accounts, address, status }) => {
               address={address}
               type={"WHITELIST"}
             />,
-            getAmountMinted() > 2222 ? (
+            tokenId > 2222 ? (
               <SaleMint accounts={accounts} address={address} />
             ) : (
               <SimpleMint accounts={accounts} address={address} type={"FREE"} />

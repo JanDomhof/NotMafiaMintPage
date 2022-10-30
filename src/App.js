@@ -80,6 +80,7 @@ function App() {
         address={address}
         status={status}
         isMobile={isMobile}
+        tokenId={tokenId}
       />
       <FootBar address={address} tokenId={tokenId} isMobile={isMobile} />
     </Flex>
