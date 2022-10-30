@@ -45,7 +45,7 @@ const SaleMint = ({ accounts, address }) => {
   };
 
   const handleIncrement = () => {
-    if (mintAmount < 3) {
+    if (mintAmount < 5) {
       setMintAmount(mintAmount + 1);
     }
   };

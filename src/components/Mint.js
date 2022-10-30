@@ -45,9 +45,9 @@ const Mint = ({ accounts, address, status }) => {
               type={"WHITELIST"}
             />,
             getAmountMinted() > 2222 ? (
-              <SimpleMint accounts={accounts} address={address} type={"FREE"} />
-            ) : (
               <SaleMint accounts={accounts} address={address} />
+            ) : (
+              <SimpleMint accounts={accounts} address={address} type={"FREE"} />
             ),
           ][status]
         )}
