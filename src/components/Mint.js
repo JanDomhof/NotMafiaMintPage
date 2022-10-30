@@ -2,9 +2,10 @@ import { Flex, Text, VStack } from "@chakra-ui/react";
 import MintingClosed from "./mint/MintingClosed";
 import SimpleMint from "./mint/SimpleMint";
 import SaleMint from "./mint/SaleMint";
+import { isCommunityResourcable } from "@ethersproject/providers";
 // import useWindowDimensions from "./helpers/WindowDimensions";
 
-const Mint = ({ accounts, address, status, tokenId }) => {
+const Mint = ({ accounts, address, status, tokenId, isMobile }) => {
   // const { width, height } = useWindowDimensions();
   // const isMobile = width < height;
 
@@ -17,6 +18,7 @@ const Mint = ({ accounts, address, status, tokenId }) => {
       </Text>
       <Flex
         bg={"white"}
+        width={isMobile ? "80%" : "400px"}
         border={"5px solid"}
         borderRadius={"20px"}
         justify={"center"}
@@ -40,7 +42,7 @@ const Mint = ({ accounts, address, status, tokenId }) => {
             ) : (
               <SimpleMint accounts={accounts} address={address} type={"FREE"} />
             ),
-          ][status]
+          ][0]
         )}
       </Flex>
     </VStack>

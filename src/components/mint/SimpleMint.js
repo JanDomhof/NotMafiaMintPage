@@ -62,7 +62,7 @@ const SimpleMint = ({ accounts, address, type }) => {
 
   return isAllowed() ? (
     <VStack zIndex={10} paddingBottom="15px">
-      <Text fontSize={isMobile ? 20 : 40}>
+      <Text fontSize={isMobile ? 20 : 30}>
         {type === "WHITELIST" ? "Mint your whitelist." : "Mint one for free."}
       </Text>
       <MintButton handleMint={handleMint} />
