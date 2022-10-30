@@ -6,9 +6,6 @@ const MintingClosed = () => {
       <Text fontSize={30} zIndex={10}>
         Minting is closed!
       </Text>
-      <Text fontSize={20} zIndex={10}>
-        We will start soon.
-      </Text>
     </VStack>
   );
 };
