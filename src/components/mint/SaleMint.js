@@ -34,8 +34,8 @@ const SaleMint = ({ accounts, address }) => {
         signer
       );
       try {
-        const response = await contract.paidMint(mintAmount, {
-          value: ethers.utils.parseEther((mintAmount * 0.01312).toString()),
+        const response = await contract.publicMint(mintAmount, {
+          value: ethers.utils.parseEther((mintAmount * 0.00869).toString()),
         });
         console.log(`mint successfull, response: ${response}`);
       } catch (e) {

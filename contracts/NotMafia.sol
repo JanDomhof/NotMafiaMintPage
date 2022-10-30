@@ -18,17 +18,15 @@ error NotAllowListed();
 error WrongMintFunction();
 
 contract NotMafia is ERC721A, Ownable, ReentrancyGuard {
-    // The different options of the status of the contract, this regulates which mint functions can be called
+    // The different options of the status of the contract, governs which mint function can be called
     enum Status {
         CLOSED, // 0
         WHITELIST, // 1
-        FREE, // 2
-        PAID // 3
+        PUBLIC // 2
     }
 
     Status public status;
     uint256 public price;
-    string public provenance;
 
     bool public revealed;
     string public preRevealURI;
@@ -41,14 +39,13 @@ contract NotMafia is ERC721A, Ownable, ReentrancyGuard {
      *
      * |  WHITELIST  |  |     FREE      |  |     PAID      |
      * |    1 pw     |  |     1 pw      |  |     3 pw      |
-     * [0, ..., 1700 ]  [1701, ..., 2222]  [2223, ..., 4444]
-     *
+     * [1, ..., 1700 ]  [1701, ..., 2222]  [2223, ..., 4444]
      */
     uint256 private tokenId;
     uint256 private constant TOTAL_WHITELIST_SUPPLY = 1700;
     uint256 private constant TOTAL_FREE_SUPPLY = 2222;
-    uint256 private constant TOTAL_SUPPLY = 4444;
-    uint256 private constant MAX_PER_WALLET_PUBLIC = 3;
+    uint256 private TOTAL_SUPPLY = 4444;
+    uint256 private constant MAX_PER_WALLET_PUBLIC = 5;
 
     mapping(address => bool) private hasMintedWhiteList;
     mapping(address => bool) private hasMintedFree;
@@ -57,14 +54,17 @@ contract NotMafia is ERC721A, Ownable, ReentrancyGuard {
     event ChangedStatus(uint256 newStatus);
 
     // Constructor
-    constructor() ERC721A("Not Mafia", "NM") {
+    constructor() ERC721A("Not Mafia", "NTMF") {
         status = Status.CLOSED;
-        price = 0.01312 ether;
-        baseURI = "";
-        provenance = "";
+        price = 0.00869 ether;
+        tokenId = 1;
+        revealed = false;
     }
 
-    // Public
+    /**
+     *  ############## PUBLIC FUNCTIONS ##############
+     */
+
     function ownerMint(uint256 __amount) external nonReentrant onlyOwner {
         // Order should not exceed the total supply
         if (tokenId + __amount > TOTAL_SUPPLY) revert AmountNotAvailable();
@@ -85,81 +85,119 @@ contract NotMafia is ERC721A, Ownable, ReentrancyGuard {
         // Status should be WHITELIST
         if (status != Status.WHITELIST) revert WrongMintFunction();
 
+        // There should still be WHITELIST supply left to fulfill order
+        if (tokenId > TOTAL_WHITELIST_SUPPLY) revert AmountNotAvailable();
+
         // Caller should be on the WHITELIST
         if (!verifyWhiteList(__proof, whiteListRoot)) revert NotWhiteListed();
 
         // Caller cannot mint more than one during the WHITELIST phase
         if (hasMintedWhiteList[msg.sender]) revert AlreadyMintedMaxInPhase();
 
-        // Increment counter and update that the caller minted during WHITELIST
+        // Increment counter
         unchecked {
-            tokenId++;
-            hasMintedWhiteList[msg.sender] = true;
+            tokenId += 1;
         }
+
+        // Update: the caller minted during WHITELIST
+        hasMintedWhiteList[msg.sender] = true;
 
         // Do the magic
         _safeMint(msg.sender, 1);
     }
 
-    function freeMint() external nonReentrant {
+    function publicMint(uint256 __amount) external payable nonReentrant {
         // Caller cannot be a contract
         if (tx.origin != msg.sender) revert OnlyUserMint();
 
-        // Status should be FREE
-        if (status != Status.FREE) revert WrongMintFunction();
+        // Status must be PUBLIC
+        if (status != Status.PUBLIC) revert WrongMintFunction();
+
+        // Send the call to the right mint function
+        if (tokenId > TOTAL_FREE_SUPPLY) {
+            paidMint(__amount);
+        } else {
+            freeMint();
+        }
+    }
+
+    /**
+     *  ############## OVERRIDING FUNCTIONS ##############
+     */
+
+    function _baseURI() internal view override returns (string memory) {
+        return baseURI;
+    }
+
+    function _startTokenId() internal view virtual override returns (uint256) {
+        // The first token that is minted has number #1
+        return 1;
+    }
+
+    function tokenURI(uint256 __tokenId)
+        public
+        view
+        virtual
+        override
+        returns (string memory)
+    {
+        if (!_exists(__tokenId)) revert URIQueryForNonexistentToken();
+        if (!revealed) return preRevealURI;
+
+        string memory __baseURI = baseURI;
+        return
+            bytes(__baseURI).length != 0
+                ? string(abi.encodePacked(__baseURI, _toString(__tokenId)))
+                : "";
+    }
+
+    /**
+     *  ############## INTERNAL FUNCTIONS ##############
+     */
+
+    function freeMint() internal nonReentrant {
+        // Cannot send eth when minting free
+        if (msg.value != 0) revert ValueNotEqualToPrice();
 
         // Caller is not allowed to mint more than one during the FREE phase
         if (hasMintedFree[msg.sender]) revert AlreadyMintedMaxInPhase();
 
-        // Amount already minted by everyone + ordered amount must not be larger than the available supply
-        uint256 current = tokenId;
-        if (current > TOTAL_FREE_SUPPLY) revert AmountNotAvailable();
-
-        // Increment counter and update that the caller has minted during the FREE phase
+        // Increment counter
         unchecked {
-            tokenId = current + 1;
-            hasMintedFree[msg.sender] = true;
+            tokenId += 1;
         }
+
+        // Update: the caller minted during the FREE phase
+        hasMintedFree[msg.sender] = true;
 
         // Do the magic.
         _safeMint(msg.sender, 1);
     }
 
-    function paidMint(uint256 __amount) external payable nonReentrant {
-        // Caller cannot be a contract
-        if (tx.origin != msg.sender) revert OnlyUserMint();
+    function paidMint(uint256 __amount) internal nonReentrant {
+        // Msg value must be equal to the cost of the amount of NFT's
+        if (msg.value != __amount * price) revert ValueNotEqualToPrice();
 
-        // Status should be PAID
-        if (status != Status.PAID) revert WrongMintFunction();
-
-        // Msg value should be at least the cost of the amount of NFT's
-        if (msg.value < __amount * price) revert ValueNotEqualToPrice();
-
-        // Amount already minted by caller + ordered amount must not be larger than the allowed amount per wallet
+        // Cannot mint more than allowed per wallet
         uint256 amountMinted = hasMintedSale[msg.sender];
         if (amountMinted + __amount > MAX_PER_WALLET_PUBLIC)
             revert WouldExceedMaxPerWallet();
 
-        // Amount already minted by everyone + ordered amount must not be larger than the available supply
-        uint256 current = tokenId;
-        if (current + __amount > TOTAL_SUPPLY) revert AmountNotAvailable();
+        // There must be supply left to fulfill the order
+        if (tokenId + __amount > TOTAL_SUPPLY) revert AmountNotAvailable();
 
-        // Increment counter and update the amount minted by user
+        // Increment counter
         unchecked {
-            tokenId = current + __amount;
-            hasMintedSale[msg.sender] = amountMinted + __amount;
+            tokenId += __amount;
         }
+
+        // update the amount minted by user
+        hasMintedSale[msg.sender] = amountMinted + __amount;
 
         // Do the magic
         _safeMint(msg.sender, __amount);
     }
 
-    // Override
-    function _baseURI() internal view override returns (string memory) {
-        return baseURI;
-    }
-
-    // Internal
     function verifyWhiteList(bytes32[] calldata __proof, bytes32 __root)
         internal
         view
@@ -173,7 +211,10 @@ contract NotMafia is ERC721A, Ownable, ReentrancyGuard {
             );
     }
 
-    // Getters - External
+    /**
+     *  ############## GETTERS -> EXTERNAL ##############
+     */
+
     function getCurrentTokenId() external view returns (uint256) {
         return tokenId;
     }
@@ -198,7 +239,10 @@ contract NotMafia is ERC721A, Ownable, ReentrancyGuard {
         return hasMintedSale[__address];
     }
 
-    // Setters - Only Owner
+    /**
+     *  ############## SETTERS -> ONLY OWNER ##############
+     */
+
     function setStatus(uint256 __status) external onlyOwner {
         status = Status(__status);
         emit ChangedStatus(__status);
@@ -220,15 +264,17 @@ contract NotMafia is ERC721A, Ownable, ReentrancyGuard {
         whiteListRoot = __root;
     }
 
-    function setProvenanceHash(string memory __hash) external onlyOwner {
-        provenance = __hash;
-    }
-
     function setPrice(uint256 __price) external onlyOwner {
         price = __price;
     }
 
-    // Withdraw Funds From Contract
+    function setTotalSupply(uint256 __newTotalSupply) external onlyOwner {
+        TOTAL_SUPPLY = __newTotalSupply;
+    }
+
+    /**
+     *  ############## FUNCTIONS -> ONLY OWNER ##############
+     */
     function withdraw() external nonReentrant onlyOwner {
         payable(msg.sender).transfer(address(this).balance);
     }

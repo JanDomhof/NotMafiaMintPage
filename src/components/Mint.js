@@ -10,6 +10,13 @@ const Mint = ({ accounts, address, status }) => {
 
   const isConnected = Boolean(accounts[0]);
 
+  const getAmountMinted = async () => {
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = provider.getSigner();
+    const contract = new ethers.Contract(address, compiledContract.abi, signer);
+    return await contract.getCurrentTokenId();
+  };
+
   return (
     <VStack>
       <Text fontSize={50} margin="0" marginTop="-50px">
@@ -21,7 +28,7 @@ const Mint = ({ accounts, address, status }) => {
         borderRadius={"20px"}
         justify={"center"}
         align={"center"}
-        padding="0 30px 0 30px"
+        padding={"0 30px 0 30px"}
       >
         {!isConnected ? (
           <Text fontSize={30} maxWidth={"100%"} maxHeight={"100%"} zIndex={10}>
@@ -35,8 +42,11 @@ const Mint = ({ accounts, address, status }) => {
               address={address}
               type={"WHITELIST"}
             />,
-            <SimpleMint accounts={accounts} address={address} type={"FREE"} />,
-            <SaleMint accounts={accounts} address={address} />,
+            getAmountMinted() > 2222 ? (
+              <SimpleMint accounts={accounts} address={address} type={"FREE"} />
+            ) : (
+              <SaleMint accounts={accounts} address={address} />
+            ),
           ][status]
         )}
       </Flex>

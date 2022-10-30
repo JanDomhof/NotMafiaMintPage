@@ -49,9 +49,11 @@ const SimpleMint = ({ accounts, address, type }) => {
             whiteListTree.getHexProof(keccak256(accounts[0]))
           );
         } else {
-          response = await contract.freeMint();
+          response = await contract.publicMint(1, {
+            value: ethers.utils.parseEther((0).toString()),
+          });
         }
-        console.log(`mint successfull, response: ${response}`);
+        console.log(`Mint successfull, response: ${response}`);
       } catch (e) {
         console.log(e);
       }
