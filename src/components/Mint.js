@@ -2,6 +2,7 @@ import { Flex, Text, VStack } from "@chakra-ui/react";
 import MintingClosed from "./mint/MintingClosed";
 import SimpleMint from "./mint/SimpleMint";
 import SaleMint from "./mint/SaleMint";
+import { ethers } from "ethers";
 // import useWindowDimensions from "./helpers/WindowDimensions";
 
 const Mint = ({ accounts, address, status }) => {
