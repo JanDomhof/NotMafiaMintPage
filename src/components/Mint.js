@@ -42,7 +42,7 @@ const Mint = ({ accounts, address, status, tokenId, isMobile }) => {
             ) : (
               <SimpleMint accounts={accounts} address={address} type={"FREE"} />
             ),
-          ][2]
+          ][status]
         )}
       </Flex>
     </VStack>
