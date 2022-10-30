@@ -19,8 +19,8 @@ const Connect = ({ accounts, setAccounts, isMobile }) => {
 
   return (
     <Flex
-      bg={"white"}
-      border={"5px solid"}
+      bg={"rgba(255, 255, 255, 0.65)"}
+      border={"2px solid"}
       height={"50px"}
       width={isMobile ? "85%" : ""}
       borderRadius={"20px"}

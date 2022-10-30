@@ -17,9 +17,9 @@ const Mint = ({ accounts, address, status, tokenId, isMobile }) => {
         Picciotto,
       </Text>
       <Flex
-        bg={"white"}
+        bg={"rgba(255,255,255, 0.65)"}
         width={isMobile ? "80%" : "400px"}
-        border={"5px solid"}
+        border={"2px solid"}
         borderRadius={"20px"}
         justify={"center"}
         align={"center"}
@@ -37,12 +37,12 @@ const Mint = ({ accounts, address, status, tokenId, isMobile }) => {
               address={address}
               type={"WHITELIST"}
             />,
-            tokenId > 2222 ? (
+            tokenId < 2222 ? (
               <SaleMint accounts={accounts} address={address} />
             ) : (
               <SimpleMint accounts={accounts} address={address} type={"FREE"} />
             ),
-          ][0]
+          ][2]
         )}
       </Flex>
     </VStack>
