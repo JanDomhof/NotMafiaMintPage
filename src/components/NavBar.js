@@ -9,11 +9,17 @@ const NavBar = ({ accounts, setAccounts, isMobile }) => {
         <VStack paddingTop="30px">
           <IconStack isMobile={isMobile} />
           <Spacer />
-          <Connect
-            accounts={accounts}
-            setAccounts={setAccounts}
-            isMobile={isMobile}
-          />
+          <>
+            {window.ethereum ? (
+              <Connect
+                accounts={accounts}
+                setAccounts={setAccounts}
+                isMobile={isMobile}
+              />
+            ) : (
+              <></>
+            )}
+          </>
         </VStack>
       ) : (
         <HStack paddingTop={"50px"}>

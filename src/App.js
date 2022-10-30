@@ -67,7 +67,7 @@ function App() {
     <Flex
       height="100%"
       direction="column"
-      justify="space-between"
+      justify={window.ethereum ? "space-between" : ""}
       padding="0 5% 0 5%"
     >
       <NavBar
@@ -82,7 +82,13 @@ function App() {
         isMobile={isMobile}
         tokenId={tokenId}
       />
-      <FootBar address={address} tokenId={tokenId} isMobile={isMobile} />
+      <>
+        {window.ethereum ? (
+          <FootBar address={address} tokenId={tokenId} isMobile={isMobile} />
+        ) : (
+          <></>
+        )}
+      </>
     </Flex>
   );
 }

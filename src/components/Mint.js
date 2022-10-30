@@ -13,7 +13,7 @@ const Mint = ({ accounts, address, status, tokenId, isMobile }) => {
 
   return (
     <VStack>
-      <Text fontSize={50} margin="0" marginTop="-50px">
+      <Text fontSize={50} margin="0" marginTop={window.ethereum ? "-50px" : ""}>
         Picciotto,
       </Text>
       <Flex
@@ -25,24 +25,47 @@ const Mint = ({ accounts, address, status, tokenId, isMobile }) => {
         align={"center"}
         padding={"0 30px 0 30px"}
       >
-        {!isConnected ? (
-          <Text fontSize={30} maxWidth={"100%"} maxHeight={"100%"} zIndex={10}>
-            Please connect your wallet.
+        {!window.ethereum ? (
+          <Text
+            fontSize={isMobile ? 20 : 25}
+            maxWidth={"100%"}
+            maxHeight={"100%"}
+            zIndex={10}
+          >
+            Please use the browser in the Metamask app or install the Metamask
+            plugin.
           </Text>
         ) : (
-          [
-            <MintingClosed accounts={accounts} address={address} />,
-            <SimpleMint
-              accounts={accounts}
-              address={address}
-              type={"WHITELIST"}
-            />,
-            tokenId > 2222 ? (
-              <SaleMint accounts={accounts} address={address} />
+          <>
+            {!isConnected ? (
+              <Text
+                fontSize={30}
+                maxWidth={"100%"}
+                maxHeight={"100%"}
+                zIndex={10}
+              >
+                Please connect your wallet.
+              </Text>
             ) : (
-              <SimpleMint accounts={accounts} address={address} type={"FREE"} />
-            ),
-          ][status]
+              [
+                <MintingClosed accounts={accounts} address={address} />,
+                <SimpleMint
+                  accounts={accounts}
+                  address={address}
+                  type={"WHITELIST"}
+                />,
+                tokenId > 2222 ? (
+                  <SaleMint accounts={accounts} address={address} />
+                ) : (
+                  <SimpleMint
+                    accounts={accounts}
+                    address={address}
+                    type={"FREE"}
+                  />
+                ),
+              ][status]
+            )}
+          </>
         )}
       </Flex>
     </VStack>
