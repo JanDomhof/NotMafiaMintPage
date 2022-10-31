@@ -8,7 +8,7 @@ import FootBar from "./components/FootBar";
 import { Flex } from "@chakra-ui/react";
 import useWindowDimensions from "./components/helpers/WindowDimensions";
 
-const address = "0x4dbcF9E0c47CB66B3C335671FAabEe4798D75dfC";
+const address = "0x8b002086064A5F0525D81045EE99bd6f587Be80E";
 const html = document.getElementById("html");
 
 function App() {

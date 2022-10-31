@@ -3,7 +3,6 @@ pragma solidity ^0.8.9;
 
 import "erc721a/contracts/ERC721A.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
-import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 import "@openzeppelin/contracts/utils/cryptography/MerkleProof.sol";
 
 error MintingClosed();
@@ -17,7 +16,7 @@ error AlreadyMintedMaxInPhase();
 error NotAllowListed();
 error WrongMintFunction();
 
-contract NotMafia is ERC721A, Ownable, ReentrancyGuard {
+contract NotMafia is ERC721A, Ownable {
     // The different options of the status of the contract, governs which mint function can be called
     enum Status {
         CLOSED, // 0
@@ -62,9 +61,10 @@ contract NotMafia is ERC721A, Ownable, ReentrancyGuard {
      *  ############## PUBLIC FUNCTIONS ##############
      */
 
-    function ownerMint(uint256 __amount) external nonReentrant onlyOwner {
+    function ownerMint(uint256 __amount) external onlyOwner {
         // Order should not exceed the total supply
-        if (tokenId + __amount > TOTAL_SUPPLY) revert AmountNotAvailable();
+        if (totalSupply() + __amount > TOTAL_SUPPLY)
+            revert AmountNotAvailable();
 
         // Increment counter
         unchecked {
@@ -75,7 +75,7 @@ contract NotMafia is ERC721A, Ownable, ReentrancyGuard {
         _safeMint(msg.sender, __amount);
     }
 
-    function whiteListMint(bytes32[] calldata __proof) external nonReentrant {
+    function whiteListMint(bytes32[] calldata __proof) external {
         // Caller cannot be a contract
         if (tx.origin != msg.sender) revert OnlyUserMint();
 
@@ -103,7 +103,7 @@ contract NotMafia is ERC721A, Ownable, ReentrancyGuard {
         _safeMint(msg.sender, 1);
     }
 
-    function publicMint(uint256 __amount) external payable nonReentrant {
+    function publicMint(uint256 __amount) external payable {
         // Caller cannot be a contract
         if (tx.origin != msg.sender) revert OnlyUserMint();
 
@@ -153,7 +153,7 @@ contract NotMafia is ERC721A, Ownable, ReentrancyGuard {
      *  ############## INTERNAL FUNCTIONS ##############
      */
 
-    function freeMint() internal nonReentrant {
+    function freeMint() internal {
         // Cannot send eth when minting free
         if (msg.value != 0) revert ValueNotEqualToPrice();
 
@@ -172,7 +172,7 @@ contract NotMafia is ERC721A, Ownable, ReentrancyGuard {
         _safeMint(msg.sender, 1);
     }
 
-    function paidMint(uint256 __amount) internal nonReentrant {
+    function paidMint(uint256 __amount) internal {
         // Msg value must be equal to the cost of the amount of NFT's
         if (msg.value != __amount * price) revert ValueNotEqualToPrice();
 
@@ -265,7 +265,8 @@ contract NotMafia is ERC721A, Ownable, ReentrancyGuard {
     /**
      *  ############## FUNCTIONS -> ONLY OWNER ##############
      */
-    function withdraw() external nonReentrant onlyOwner {
+
+    function withdraw() external onlyOwner {
         payable(msg.sender).transfer(address(this).balance);
     }
 }

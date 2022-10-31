@@ -11,7 +11,7 @@ const IconStack = ({ isMobile }) => {
       </Link>
       <Spacer />
       <Link
-        href="https://etherscan.io/address/0x4dbcf9e0c47cb66b3c335671faabee4798d75dfc"
+        href="https://etherscan.io/address/0x8b002086064A5F0525D81045EE99bd6f587Be80E"
         borderRadius="50%"
       >
         <Image src={Etherscan} boxSize="60px" borderRadius="50%"></Image>
