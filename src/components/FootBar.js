@@ -15,7 +15,7 @@ const FootBar = ({ tokenId, isMobile }) => {
     <>
       <TextFieldFixed text={`${tokenId - 1}/4444 minted`} width="90%" />
       <Spacer />
-      <TextFieldFixed text={`2222 free, then 0.00869`} width="90%" />
+      <TextFieldFixed text={`2222 free, then 0.0019`} width="90%" />
     </>
   );
 
