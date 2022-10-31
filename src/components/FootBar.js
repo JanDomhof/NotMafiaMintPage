@@ -13,7 +13,7 @@ const FootBar = ({ tokenId, isMobile }) => {
 
   const innerMobile = (
     <>
-      <TextFieldFixed text={`${tokenId}/4444 minted`} width="90%" />
+      <TextFieldFixed text={`${tokenId - 1}/4444 minted`} width="90%" />
       <Spacer />
       <TextFieldFixed text={`2222 free, then 0.00869`} width="90%" />
     </>
