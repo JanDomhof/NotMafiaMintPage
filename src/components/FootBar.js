@@ -7,7 +7,7 @@ const FootBar = ({ tokenId, isMobile }) => {
     <>
       <TextFieldFixed text={`${tokenId}/4444 minted`} width="275px" />
       <Spacer />
-      <TextField text={"First 2222 free, then 0.00869"} />
+      <TextField text={"First 2222 free, then 0.0019"} />
     </>
   );
 
